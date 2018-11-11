@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/MISoftware/IconDrop/master/demo.gif)
+![](https://raw.githubusercontent.com/ramon-mendes/IconDrop/master/demo.gif)
 
 IconDrop is an open-source **SVG icon-manager** desktop app for Windows and OSX.
 

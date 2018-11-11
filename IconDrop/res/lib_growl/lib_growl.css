@@ -1,0 +1,68 @@
+div#growl-box
+{
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	height:	0;
+	overflow: visible;
+
+	flow: vertical;
+	horizontal-align: middle;
+}
+
+div.growl
+{
+	visibility: none;
+
+	flow: horizontal;// for the close button
+	vertical-align: top;
+	border-spacing: 8px;
+
+	width: max-content;
+	max-width: 60%;
+
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding: 10px 13px;
+	transform: scale(0.3, 1);
+
+	opacity: 0.2;
+	border: solid 2px #BCE8F1;
+	background: #D9EDF7;
+	border-radius: 3px;
+
+	color: #31708F;
+	font-size: 14px;
+}
+div.growl.error
+{
+	border-color: #eeb9c1;
+	background: #eed6d6;
+	color: #B94A48;
+}
+div.growl.success
+{
+	border-color: rgb(208, 233, 198);
+	background: rgb(223, 240, 216);
+	color: rgb(60, 118, 61);
+}
+
+div.growl[animate]
+{
+	opacity: 1;
+	transform: scale(1, 1);
+	transition: transform(bounce-in, 800ms, none) opacity(linear, 250ms, none);
+}
+div.growl[fadeout]
+{
+	opacity: 0;
+	transition: opacity(linear, 800ms);
+}
+
+div.growl i
+{
+	font-size: 14px;
+	margin-left: *;
+	opacity: 0.4;
+}
+div.growl i:hover { opacity: 1; cursor: pointer; }

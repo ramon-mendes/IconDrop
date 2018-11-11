@@ -1,0 +1,100 @@
+﻿class IconBehavior : Element
+{
+	var captured = false;
+
+	function Create(obj_icon)
+	{
+		var el_icon = self#list.$append(<icn><svg /></icn>);
+		var url = isource.IconTranslateURL(obj_icon.hash);
+
+		el_icon.icon = obj_icon;
+		el_icon.$(svg).style#foreground-image = "url(" + url + ")";
+
+		if(obj_icon.colored)
+			el_icon.@.addClass("colored");
+
+		if(obj_icon.arr_tags)
+			el_icon.@#poptip = obj_icon.arr_tags.join(", ");
+
+		var checked = UI.Proj._active && UI.Proj.IconIsChecked(obj_icon.hash);
+		el_icon.state.checked = checked;
+		if(checked)
+			el_icon.$prepend(<btn .rmv><icon .icon-minus-1 /></btn>);
+		else
+			el_icon.$prepend(<btn .add><icon .icon-plus /></btn>);
+		return el_icon;
+	}
+
+	function attached()
+	{
+		this.on("click", "btn.add", function() {
+			var el_icon = this.parent;
+			if(UI.Proj.IconAddRmv(true, el_icon.icon))
+			{
+				el_icon[0].$replace(<btn .rmv><icon .icon-minus-1 /></btn>);
+				el_icon.state.checked = true;
+				IconInfo.RefreshForIcon(el_icon.icon.hash);
+			}
+			return true;
+		});
+		this.on("click", "btn.rmv", function() {
+			var el_icon = this.parent;
+			if(UI.Proj.IconAddRmv(false, el_icon.icon))
+			{
+				el_icon[0].$replace(<btn .add><icon .icon-plus /></btn>);
+				el_icon.state.checked = false;
+				IconInfo.RefreshForIcon(el_icon.icon.hash);
+			}
+			return true;
+		});
+		this.on("mousedown", function(evt) {
+			if(evt.propButton)
+			{
+				this.popup(self#menu-icon, evt.xView, evt.yView);
+			}
+		});
+
+		this.onControlEvent = function(evt) {
+			if(evt.type == Event.MENU_ITEM_CLICK)
+			{
+				view.Host_CopySkiaCode(this.icon.hash);
+			}
+		};
+	}
+
+	function onMouse(evt)
+	{
+		if(evt.type == Event.MOUSE_DRAG_REQUEST)
+		{
+			var el_this = this;
+			var icon = this.icon;
+			var hash = icon.hash;
+			var path = view.Host_SaveTempSVG(hash, !!self.@#black);
+			PerformFileDrag(path, hash, function(res) {
+				el_this.state.hover = false;
+			});
+
+			return true;
+		}
+	}
+
+	function PerformFileDrag(path, hash, on_complete)
+	{
+		var (x, y) = view.cursorLocation();
+
+		if(Utils.IsWindows)
+		{
+			self#drag-img.style#left = x;
+			self#drag-img.style#top = y;
+			self#drag-img.$(svg).style#foreground-image = "url(svg:" + hash + ".svg)";
+			self#drag-img.update();
+
+			var res = view.performDrag(self#drag-img.$(div), { file: path }, #copy);
+			on_complete(res);
+		} else {
+			view.Host_StartDnD(path, x, y, function() {
+				on_complete(true);
+			});
+		}
+	}
+}

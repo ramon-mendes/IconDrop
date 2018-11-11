@@ -1,0 +1,82 @@
+﻿function SetupIconStore()
+{
+	var bulk_pos = 0;
+	var arr_stores;
+	var arr_listed;
+
+	function BulkLoad()
+	{
+		for(var i = 0; i < 8; i++)
+		{
+			if(bulk_pos == arr_listed.length)
+			{
+				self#btn-store-load.hide();
+				return;
+			}
+
+			var entry = arr_listed[bulk_pos++];
+			var imgurl = Consts.SERVER_ICONS + "IconPacks/PackImage?id=" + URL.encodeParam(entry.id);
+			log(imgurl);
+			var el_entry = self#store-list.$append(<div><img src="{imgurl}" /><h2>{entry.pack_name}</h2></div>)
+			el_entry.entry = entry;
+		}
+		self#btn-store-load.show();
+	}
+
+	function ResetAndLoad()
+	{
+		bulk_pos = 0;
+		self#store-list.clear();
+		BulkLoad();
+	}
+
+	self#store-list.on("click", "div", function() {
+		var entry = this.entry;
+		assert(entry);
+
+		var el_div = this;
+		el_div.@.addClass("loading");
+
+		self.state.disabled = true;
+		isource.EnsureStoreIsLoaded(entry.id, function(res) {
+			el_div.@.removeClass("loading");
+			self.state.disabled = false;
+
+			if(res)
+				ListUI.ListStore(entry);
+			else
+				view.msgbox(#alert, "Could not load this pack.\nCheck your internet connection.", Consts.APPNAME);
+		});
+	});
+
+	self#btn-store-load.onClick = function() {
+		BulkLoad();
+	};
+
+	self#ui-store-search-txt.onValueChanged = function() {
+		if(!this.value)
+		{
+			self#btn-store-search-clear.hide();
+			arr_listed = arr_stores;
+		} else {
+			var needle = this.value.toLowerCase();
+			self#btn-store-search-clear.show();
+			arr_listed = arr_stores.filter(function(entry) {
+				return entry.pack_name.toLowerCase().indexOf(needle) != -1;
+			});
+		}
+		ResetAndLoad();
+	};
+	
+	self#btn-store-search-clear.onClick = function() {
+		self#ui-store-search-txt.value = undefined;
+		self#btn-store-search-clear.hide();
+		arr_listed = arr_stores;
+		ResetAndLoad();
+	};
+
+	arr_stores = arr_listed = view.Host_IconStoreList();
+	ResetAndLoad();
+}
+
+SetupIconStore();

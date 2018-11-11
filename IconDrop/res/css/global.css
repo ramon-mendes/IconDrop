@@ -1,0 +1,131 @@
+@import url(fontello/idrop-svg.css);
+@import url(buttons.css);
+@import url(search.css);
+@import url(fonts/fonts.css);
+
+@const CLR_BLUE: #0064c8;
+@const CLR_COLTITLE_BLUISH: #377BE9;
+
+html
+{
+	//font-rendering-mode: classic;
+	font-family: system;
+}
+
+body
+{
+	flow: vertical;
+	overflow: hidden;
+	background: white;
+	margin: 0;
+}
+
+@media os-vendor=="Apple"
+{
+	html { font-size: 9pt; }
+	.hide-osx { visibility: none; }
+}
+@media os-vendor=="Microsoft"
+{
+	.hide-win { visibility: none; }
+}
+
+.hide { visibility: none; }
+.show { visibility: visible; }
+.dbg { outline: solid 2px red; }
+
+icon { size: 16px; fill: currentColor; }
+accesskey { display: inline-block; color: #9e6d85; }
+
+hflow { display: block; flow: horizontal; }
+hflow.txt { border-spacing: 5px; vertical-align: middle; }
+vflow { display: block; flow: vertical; }
+sflow { display: block; flow: stack; size: *; }
+hspacer { display: block; width: * }
+
+tabs { display: block; }
+tabs tab { display: block; visibility: none; }
+tabs tab:current { visibility: visible; }
+
+select//, input, widget[type=text]
+{
+	background: white;
+	border: solid 1px #CCCEDB;
+}
+input:empty, widget[type=text]:empty { color: silver; }
+
+overlay
+{
+	display: block;
+	visibility: none;
+	position: absolute;
+	z-index: 999;
+	top: 0; right: 0; bottom: 0; left: 0;
+	background: rgba(0,0,0,0.9);
+
+	flow: horizontal;
+	vertical-align: middle;
+	horizontal-align: middle;
+	border-spacing: 10px;
+	color: white;
+
+	prototype: UIOverlay url(../tis/behavior_overlay.tis);
+}
+overlay .btn-cancel
+{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	size: 24px;
+	cursor: pointer;
+}
+overlay form widget
+{
+	width: 240px;
+	background: white;
+	margin-bottom: 4px;
+	//text-selection-caret-color: white;
+}
+overlay form em
+{
+	color: silver;
+}
+overlay form button
+{
+	margin-top: 10px;
+}
+
+
+@const TAG_COLOR: #d9edf7;
+@const TAG_COLOR_BORDER: #B0D8EC; //morph(@TAG_COLOR, darken:10%);
+tag
+{
+	display: block;
+	size: max-content *;
+	padding: 0 6px;
+	vertical-align: middle;
+
+	color: #3a87ad;
+	background-color: @TAG_COLOR;
+	border: solid 1px @TAG_COLOR_BORDER;
+	border-radius: 2px;
+}
+
+hint
+{
+	size: 100%;
+	display: block;
+	position: absolute;
+	z-index: 12;
+	visibility: none;
+
+	vertical-align: middle;
+	horizontal-align: middle;
+
+	background: rgba(0, 0, 0, 0.85);
+}
+hint frame
+{
+	size: max-content;
+	border: solid @CLR_BLUE 4px;
+}

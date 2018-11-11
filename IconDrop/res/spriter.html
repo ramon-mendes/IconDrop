@@ -1,0 +1,67 @@
+<!-- OmniView:on -->
+<html>
+<head>
+	<style>
+		@import url(css/global.css);
+		@import url(css/import.css);
+
+		body
+		{
+			margin: 0;
+			padding: 20px;
+		}
+
+		h1
+		{
+			flow: horizontal;
+			margin: 0;
+			margin-bottom: 5px;
+			font-family: alphanum20;
+		}
+		h1 icon { margin-left: *; size: 12px; cursor: pointer; }
+
+		#import-list
+		{
+			size: *;
+		}
+
+		footer { flow: horizontal; height: 26px; }
+		footer hflow { border-spacing: 3px; width: *; }
+		footer hflow > * { height: *; vertical-align: middle; }
+		footer hflow input { line-height: 18px; }
+		footer select { width: 140px; }
+	</style>
+
+	<script type="text/tiscript">
+		self#btn-close.onClick = function() {
+
+		};
+
+		self#btn-import-add.onClick = function() {
+
+		};
+
+		self#btn-import-new.onClick = function() {
+
+		};
+	</script>
+</head>
+
+<body>
+	<h1>Import icons<icon .icon-cancel#btn-close /></h1>
+	Total icons: <span />
+	<div #import-list />
+
+	<footer>
+		<hflow .txt>
+			<widget #btn-import-add.btn-red><icon .icon-download />Add to existing collection</widget>
+			<select #sel-exists-cols />
+		</hflow>
+
+		<hflow>
+			<widget #btn-import-new.btn-red><icon .icon-list-add />Import to new collection</widget>
+			<input #txt-import-name novalue="Collection name" />
+		</hflow>
+	</footer>
+</body>
+</html>

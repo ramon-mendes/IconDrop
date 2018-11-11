@@ -1,0 +1,44 @@
+﻿function ClosePopups()
+{
+	for(var pup in $$(:popup)) 
+		pup.state.popup = false;
+}
+
+self.on("~keydown", function(evt) {
+	var ctrl;
+	var none = !evt.commandKey && !evt.ctrlKey && !evt.shiftKey && !evt.altKey
+	if(Utils.IsWindows)
+		ctrl = evt.ctrlKey && !evt.shiftKey && !evt.altKey;
+	else
+		ctrl = evt.commandKey && !evt.shiftKey && !evt.altKey;
+
+	if(ctrl)
+	{
+		switch(evt.keyCode)
+		{
+		case Event.VK_F:
+			self#ui-search-txt.state.focus = true;
+			self#ui-search-txt.doSelectAll();
+			return true;
+		case Event.VK_Q:
+			view.Host_Quit();
+			return true;
+		}
+	} else if(none) {
+		switch(evt.keyCode)
+		{
+		case Event.VK_ESCAPE:
+			if(Utils.IsOSX)
+			{
+				view.windowState = View.WINDOW_HIDDEN;
+				return;
+			}
+
+			if(self#ui-search-txt.value)
+			{
+				UI.CloseSearch();
+			}
+			return true;
+		}
+	}
+});

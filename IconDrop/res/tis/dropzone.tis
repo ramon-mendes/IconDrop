@@ -1,0 +1,45 @@
+﻿function DropZone()
+{
+	var el_zone = this;
+	el_zone.on("dragenter", function(evt) {
+		if(evt.draggingDataType == #file) {
+			count();
+			self.@.addClass("dnd-target");
+		}
+		return true;
+	});
+	el_zone.on("dragleave", function() {
+		self.@.removeClass("dnd-target");
+		return true;
+	});
+	el_zone.on("drag", function() {
+		return true;
+	});
+	el_zone.on("drop", function(evt) {
+		if(evt.draggingDataType == #file)
+		{
+			self.@.removeClass("dnd-target");
+			var files = evt.dragging;
+			if(typeof(evt.dragging) != #array)
+				files = [files];
+			for(var path in files)
+			{
+				if(path %~ "svg")
+				{
+					view.msgbox(#alert, "You can only import .svg files", Consts.APPNAME);
+					return;
+				}
+			}
+
+			View.importFiles = files;
+			View.importClose = function() {
+				$(import).hide();
+				UI.RelistCollections();
+			};
+
+			$(import frame).load(self.url("import.html"));
+			$(import).show();
+			return true;
+		}
+	});
+}

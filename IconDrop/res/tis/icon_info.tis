@@ -1,0 +1,127 @@
+﻿namespace IconInfo
+{
+	var _obj_icon;
+
+	function Setup()
+	{
+		self#btn-info-close.on("click", function() {
+			_obj_icon = undefined;
+			self#icn-info.hide();
+		});
+
+		self#png-sizes.onMouse = function(evt){
+			if(evt.type == Event.MOUSE_DRAG_REQUEST && evt.target.$is(div))
+			{
+				var sz = evt.target.text.toInteger();
+				var img = new Image(sz, sz, self#svg-thumb);
+				var path = view.Host_SavePNG(_obj_icon.arr_tags[0], img.toBytes());
+				IconBehavior.PerformFileDrag(path, _obj_icon.hash);
+				evt.target.state.hover = false;
+				return true;
+			}
+		}
+
+		/*self#ui-btn-add-sprite.onClick = function() {
+			UI.Proj.IconAddRmv(true, _obj_icon.hash);
+		};
+		self#ui-btn-rmv-sprite.onClick = function() {
+			UI.Proj.IconAddRmv(false, _obj_icon.hash);
+		};*/
+		self#ui-btn-usecopy.onClick = function() {
+			if(!Ion.IsActive && _obj_icon.kind == EIconKind.STORE)
+			{
+				view.msgbox(#alert, "Using icons from online packs in only available in PRO version.", Consts.APPNAME);
+				return;
+			}
+
+			view.Host_CopySVGIconUse(UI.Proj.IconGetName(_obj_icon));
+		};
+		self#ui-btn-symbolcopy.onClick = function() {
+			if(!Ion.IsActive && _obj_icon.kind == EIconKind.STORE)
+			{
+				view.msgbox(#alert, "Using icons from online packs in only available in PRO version.", Consts.APPNAME);
+				return;
+			}
+
+			if(UI.Proj._active)
+				view.Host_CopySVGIconSymbol(_obj_icon.hash, UI.Proj.IconGetName(_obj_icon));
+			else
+				view.Host_CopySVGIconSymbol(_obj_icon.hash);
+		};
+		self#ui-icon-name.onValueChanged = function() {
+			var name = self#ui-icon-name.value;
+			var correct = /^[A-Za-z0-9_-]+$/.test(name) && !UI.Proj.IsIconNameInUse(name, _obj_icon.hash);
+			self#ui-icon-name.state.incomplete = !correct;
+			if(correct)
+				UI.Proj.IconSetName(_obj_icon, name);
+			self#ui-btn-usecopy.state.disabled = !correct;
+		};
+
+		self#info-filename.$(icon).onClick = ::view.Host_RevealFile(_obj_icon.path);
+		self#info-collection.$(icon).onClick = ::ListCollection(_obj_icon.source.name);
+	}
+
+	function ShowIconInfo(obj_icon)
+	{
+		_obj_icon = obj_icon;
+
+		var url = isource.IconTranslateURL(obj_icon.hash);
+
+		self#icn-info.$(svg).style#foreground-image = "url(" + url + ")";
+		self#icn-info.$(svg).update();
+		self#info-area-lib.hide();
+		self#info-area-col.hide();
+		self#info-area-store.hide();
+
+		if(obj_icon.kind == EIconKind.LIBRARY)
+		{
+			self#info-area-lib.show();
+			self#info-pack.text = obj_icon.source.name;
+			self#info-pack.@#href = obj_icon.source.url;
+			self#info-license.text = obj_icon.source.license;
+			self#info-license.@#href = obj_icon.source.licenseURL;
+
+			self#info-tags.clear();
+			for(var tag in obj_icon.arr_tags)
+				self#info-tags.$append(<span .tag>{tag}</span>);
+		} else if(obj_icon.kind == EIconKind.COLLECTION) {
+			self#info-area-col.show();
+
+			self#info-filename[0].text = obj_icon.arr_tags[0];
+			self#info-collection[0].text = obj_icon.source.name;
+			self#info-area-col.update();
+		} else {
+			self#info-area-store.show();
+			self#info-store-filename[0].text = obj_icon.arr_tags[0];
+			self#info-store-pack.text = obj_icon.source.name + " / " + obj_icon.source.author;
+			self#info-store-pack.@#href = obj_icon.source.url;
+		}
+
+		if(!UI.Proj._active)
+		{
+			self#tab-warn-activate.state.current = true;
+		}
+		else if(!UI.Proj.IconIsChecked(obj_icon.hash))
+		{
+			self#tab-btn-use.state.current = true;
+		}
+		else
+		{
+			self#tab-sprite.state.current = true;
+			self#ui-icon-name.value = UI.Proj.IconGetName(obj_icon);
+			self#ui-icon-name.onValueChanged();
+		}
+		
+		log(obj_icon.colored);
+		self#icn-info.@.toggleClass("colored", obj_icon.colored);
+		self#icn-info.show();
+	}
+
+	function RefreshForIcon(hash)
+	{
+		if(_obj_icon==undefined)
+			return;
+		if(_obj_icon.hash == hash)
+			ShowIconInfo(_obj_icon);
+	}
+}

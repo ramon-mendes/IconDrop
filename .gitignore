@@ -1,0 +1,16 @@
+/ReleaseInfo
+/GPUCache
+debug.log
+ArchiveResource.cs
+
+# Garbage
+.DS_Store
+**/bin/Debug
+**/bin/Release
+obj/
+packages/
+.vs/
+*.sdf
+*.db
+*.opendb
+*.userprefs

@@ -1,0 +1,108 @@
+#ion
+{
+	position: absolute;
+	top: 11px;
+	right: 18px;
+	flow: horizontal;
+	
+	border-spacing: 5px;
+
+	cursor: pointer;
+}
+#ion vflow { horizontal-align: right; border-spacing: 5px; }
+#ion span
+{
+	width: max-content;
+	padding: 2px 10px;
+	border-radius: 100px;
+	font-size: 11px;
+	white-space: none;
+}
+#ion span { border: solid 1px #fb4141; background: #FDDDDD; }
+#ion span#pro,
+#ion span#pro2 { border: solid 1px black; background: black; color: white; cursor: pointer; }
+#ion icon { size: 9px; margin-top: 6px; }
+@media os-vendor=="Apple"
+{
+	#ion span { line-height: 8px; height: 12px; }
+}
+#ion i { font-size: 9px; }
+#ion
+
+#info-update
+{
+	visibility: none;
+	margin-top: -17px;
+	margin-left: 5px;
+	padding: 6px 10px;
+
+	background: #ededed;
+	border: solid 2px #d5d5d5;
+
+	line-height: 20px;
+}
+#info-update a { color: #0167cc; }
+#info-update[show]
+{
+	bottom: -4px;
+	//transition: bottom(cubic-in-out, 600ms)
+}
+
+home { style-set: Home; }
+
+@set Home
+{
+	:root
+	{
+		position: relative;
+		display: block;
+		size: *;
+		background: url(../img/grain.png);
+		overflow-y: scroll-indicator;
+	}
+	h1
+	{
+		margin-left: 20px;
+		font-size: 31px;
+		font-family: alphanum20;
+	}
+	
+	#home-scroller
+	{
+		size: *;
+		overflow-y: scroll;
+	}
+
+	section
+	{
+		margin-bottom: 20px;
+		background: white;
+		padding: 15px 20px;
+	}	
+
+	p { margin: 0; margin-bottom: 2px; font-size: 14px; }
+	#info-cols
+	{
+		cursor: pointer;
+		flow: horizontal;
+		padding: 1px 4px;
+		display: inline-block;
+		color: gray;
+		border: dashed 1px;
+	}
+	#info-cols icon
+	{
+		fill: gray;
+		margin: * 0;
+		size: 30px;
+		margin-left: 15px;
+	}
+
+	#ui-collections em { float: right; }
+
+
+	select
+	{
+		width: 200px;
+	}
+}

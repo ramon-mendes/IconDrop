@@ -1,0 +1,143 @@
+#icn-info
+{
+	visibility: none;
+
+	flow: horizontal;
+	min-height: 190px;
+	padding: 20px;
+
+	background: #F9F9F9;
+	border-top: solid 1px #DADADA;
+	border-spacing: 16px;
+
+	style-set: IcnInfo;
+}
+
+#icn-info:not(.colored) { fill: black; }
+[black] #icn-info:not(.colored) { fill: white; }
+
+[black] #icn-info
+{
+	background: #0c0c0c;
+	border-top: solid 1px silver;
+	color: white;
+
+	style-set: IcnInfoBlack;
+}
+
+@set IcnInfo
+{
+	icn
+	{
+		display: block;
+		flow: stack;
+		size: 190px;
+
+		border-radius: 5px;
+		background: white;
+		//box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.06);
+	}
+	icn svg
+	{
+		margin: 20px;
+		size: *;
+		background: none;
+		foreground-position: center;
+		foreground-size: contain;
+		foreground-repeat: no-repeat;
+	}
+	
+	vflow
+	{
+		width: *;
+		font-size: 14px;
+		color: rgb(49, 56, 60);
+	}
+	
+	#area-details .line
+	{
+		flow: horizontal;
+		vertical-align: middle;
+		margin-bottom: 6px;
+		border-spacing: 5px;
+	}
+
+	#area-details a
+	{
+		display: block;
+		color: #2626c8;
+		text-decoration: none;
+	}
+	#area-details icon { size: 15px; }
+	#area-details icon:hover { fill: #2626c8; cursor: pointer; }
+
+	#area-details b,
+	#area-sprite b
+	{
+		text-wrap: none;
+		display: block;
+		font-weight: 500;
+		margin-bottom: 3px;
+	}
+	#area-details #info-tags
+	{
+		flow: horizontal-flow;
+		border-spacing: 4px;
+	}
+	#area-details .tag
+	{
+		padding: 2px 5px;
+		font-size: 12px;
+		background: #D3E7FA;
+		border-radius: 4px;
+	}
+
+	#area-sprite em
+	{
+		display: block;
+		font-size: 13px;
+		color: gray;
+	}
+
+	#area-sprite p
+	{
+		margin: 0;
+		margin-top: 8px;
+		font-size: 13px;
+	}
+
+	#ui-icon-name + em { visibility: none; }
+	#ui-icon-name:incomplete { outline: solid 1px red; }
+	#ui-icon-name:incomplete + em { visibility: visible; }
+	
+	#btn-info-close
+	{
+		size: 9px;
+		cursor: pointer;
+	}
+}
+#area-sprite button icon
+{
+	size: 12px !important;// cause !important dont work in @set
+}
+#png-sizes div
+{
+	margin-right: -1px;
+	padding: 0 3px 2px 3px;
+	background: white;
+	font-size: 13px;
+	border: solid 1px #CCCEDB;
+}
+#png-sizes div:hover
+{
+	cursor: pointer;
+	background: #E3E4ED;
+}
+
+
+@set IcnInfoBlack < IcnInfo
+{
+	icn { background: black; }
+	b { color: silver; }
+	a { color: #8282ea; }
+}

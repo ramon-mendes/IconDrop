@@ -1,0 +1,137 @@
+html { background: transparent; }
+
+body
+{
+	margin: 0;
+	flow: vertical;
+}
+
+.dnd-target drop
+{
+	visibility: visible;
+	color: white;
+	flow: horizontal;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+spriter, import, drop
+{
+	display: block;
+	visibility: none;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+
+	padding: 30px;
+	background: rgba(0,0,0, 0.8);
+}
+
+header
+{
+	height: 30px;
+	padding: 8px 13px;
+
+	flow: horizontal;
+	vertical-align: middle;
+	border-spacing: 4px;
+	background: url(../img/grain.png) #0F52BA;
+
+	//box-shadow: 0 0 20px 0 rgba(145, 153, 158, .3);
+}
+header icon { size: 14px; fill: rgba(255, 255, 255, 0.71); margin-left: 12px; cursor: pointer; }
+header icon:hover { fill: white; }
+header icon#back
+{
+	visibility: none;
+	margin: 0;
+	size: 22px;
+}
+header #toolbar { visibility: none; }
+
+#ui-sz
+{
+	height: 3dip;
+	background: #ccc;
+}
+#ui-sz > button.slider
+{
+	size: 10dip;
+	foreground: none;
+	background: #fff;
+	border: 3dip solid rgb(32,32,32);
+	border-radius: 50%;
+}
+
+project
+{
+	display: block;
+	visibility: none;
+	height: 0;
+	flow: horizontal;
+	padding: 10px 12px;
+	border-bottom: solid 1px silver;
+	border-spacing: 5px;
+}
+[black] project { background: #0c0c0c; color: white; }
+
+project:current { visibility: visible; height: 18px; transition: height(cubic-out, 400ms, none); }
+
+project b span { color: #D9534F; }
+project icon { fill: #647280; cursor: pointer; opacity: 0.5; margin: * 0; }
+project icon:hover { opacity: 1; }
+project icon.icon-cancel { size: 10px; }
+project .icount { color: #D9534F; }
+
+main
+{
+	position: relative;
+	visibility: none;
+	size: *;
+}
+
+#query
+{
+	visibility: none;
+	flow: horizontal;
+	padding: 0 20px;
+	vertical-align: middle;
+	border-spacing: 30px;
+	background: #030C14;
+}
+#query h1 { color: white; font-weight: normal; }
+#query span { color: #bac4cb; }
+#query #btn-mode-filled { margin-left: *; }
+
+
+body
+{
+	flow: vertical;
+	horizontal-align: middle;
+}
+
+#osx-wraper
+{
+	size: *;
+}
+
+@media os-vendor=="Apple"
+{
+	@const BRD_COLOR: rgb(0, 206, 233);
+
+	html, body { background: transparent; }
+
+	#osx-wraper
+	{
+		border: solid 3px @BRD_COLOR;
+		border-radius: 5px;
+		background: white;
+		overflow: hidden;// cause of border-radius
+	}
+	img#osx-arrow { foreground-image-transformation: colorize(@BRD_COLOR); }
+}

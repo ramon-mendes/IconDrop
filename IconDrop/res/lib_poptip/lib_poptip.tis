@@ -1,0 +1,19 @@
+var el_tool;
+
+class PoptipBehavior : Element
+{
+	function attached()
+	{
+		if(!el_tool)
+			el_tool = $(body).$append(<div .poptip-popup>);
+
+		this.on(this.@#popnow!==undefined ? "mouseenter" : "tooltiprequest", function(evt) {
+			el_tool.html = this.@#poptip.replace("\\n", "<br />");
+			this.popup(el_tool, Utils.popupAttachment());
+		});
+		
+		this.on("mouseleave", function() {
+			el_tool.closePopup();
+		});
+	}
+}

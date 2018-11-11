@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="48px" height="48px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFB74D;}
+	.st1{fill:none;stroke:#546E7A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+	.st2{fill:#00ACC1;}
+	.st3{fill:none;stroke:#546E7A;stroke-width:2;}
+	.st4{fill:#2D4C5C;}
+	.st5{fill:#FF754C;}
+	.st6{fill:#546E7A;}
+	.st7{fill:#7E8CCF;}
+	.st8{fill:#C5CAE9;}
+</style>
+<g>
+	<path class="st0" d="M26,32.5c-0.3,0-0.6-0.1-0.9-0.3L19,27.6L12,30c-0.8,0.2-1.2-0.8-1.4-1.6c-0.2-0.8,0.2-1.6,1-1.9l7-2
+		c0.4-0.1,0.9,0,1.3,0.2l7,5c0.7,0.5,0.8,1.4,0.3,2.1C26.9,32.3,26.5,32.5,26,32.5z"/>
+	<polygon class="st1" points="26,16 21,23 31,20 	"/>
+	<path class="st2" d="M12.1,18c-1.8,0-3.7,1-4,2.9l-1,5c-0.3,1.9,1,3.7,2.9,4c0.2,0,0.4,0,0.6,0c1.7,0,3.2-1.2,3.4-2.9l1.8-9.1
+		C15.8,18,12.3,18,12.1,18z"/>
+	<path class="st0" d="M10.5,10c1.9,0,3.5,1.6,3.5,3.5S12.4,17,10.5,17C8.6,17,7,15.4,7,13.5S8.6,10,10.5,10"/>
+	<path class="st0" d="M11.5,21h12c0.8,0,1.5-0.7,1.5-1.5l0,0c0-0.8-0.7-1.5-1.5-1.5h-12c-0.8,0-1.5,0.7-1.5,1.5l0,0
+		C10,20.3,10.7,21,11.5,21z"/>
+	<line class="st3" x1="30" y1="20" x2="44" y2="20"/>
+	<path class="st4" d="M18.6,24.6l-5,1.4l0,0h0H11l1,4l7-2.4v-3.1C18.9,24.5,18.7,24.5,18.6,24.6z"/>
+	<path class="st5" d="M7.1,39.3c0.7,2.5,8.9,2.2,18.2-0.7c9.4-2.9,16.4-7.4,15.7-9.9c-0.7-2.5-8.9-2.2-18.2,0.7
+		C13.3,32.4,6.3,36.8,7.1,39.3z"/>
+	<path class="st6" d="M11.8,33.9c0,0,0.1,0.1,0.1,0.1c0.9-0.5,1.8-1,2.9-1.5L12,26H7c-0.2,1.2,0.3,2.3,1.1,3L11.8,33.9z"/>
+	<path class="st7" d="M44,38c-3,0-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2v6h40
+		V38z"/>
+	<path class="st8" d="M44,40c-3,0-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2s-4-2-4-2s-1,2-4,2v4h40
+		V40z"/>
+</g>
+</svg>

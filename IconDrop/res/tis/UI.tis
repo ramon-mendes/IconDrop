@@ -1,0 +1,410 @@
+﻿var isource = $(isource);
+
+namespace UI
+{
+	var _arr_sizes = [12, 16, 20, 30, 40, 60];
+	var _arr_spacing = [10, 15, 20, 22, 25, 30];
+	var _isize = 2;
+	var _inhome = true;
+
+	namespace Proj
+	{
+		var _active;
+		var _idx;
+		var _obj;// { name, dir, dic_icons[hash]=>name }
+		var _svg_output_path;
+		var _el_project = $(project);
+		
+		function Setup()
+		{
+			self#ui-proj-eye.onClick = function() {
+				ListProject();
+			};
+			self#ui-proj-folder.onClick = function() {
+				view.Host_RevealFile(_svg_output_path);
+			};
+			self#ui-proj-close.onClick = function() {
+				SelectProject(undefined);
+				if(!_inhome)
+					ListUI.ResetViewAndLoad();
+			};
+		}
+		
+		function SelectProject(idx)
+		{
+			if(idx===undefined)
+			{
+				_active = false;
+				self#btn-rmv-project.state.disabled = true;
+				self#ui-projects.value = undefined;
+				_el_project.state.current = false;
+			} else {
+				_active = true;
+				_idx = idx;
+				_obj = Settings.ns_data.arr_projects[idx];
+				_svg_output_path = _obj.dir + "icon-sprites.svg";
+
+				// delete not found icon hashes
+				for(var (hash,v) in _obj.dic_icons.clone())
+				{
+					if(!isource.IconHashExists(hash))
+					{
+						log("deleting " + hash);
+						delete _obj.dic_icons[hash];
+					}
+				}
+
+				RegenerateSVGSprite();
+
+				self#btn-rmv-project.state.disabled = false;
+				self#ui-projects.value = idx;
+				
+				_el_project.state.current = false;
+				self.post(function() {
+					_el_project.state.current = true;
+					_el_project.$(.name).text = _obj.name;
+					_el_project.$(.icount).text = "(" + _obj.dic_icons.length + " icons)";
+				});
+			}
+		}
+
+		function RelistProjects()
+		{
+			self#ui-projects.options.clear();
+			self#ui-projects.state.disabled = false;
+			for(var (i,v) in Settings.ns_data.arr_projects)
+				self#ui-projects.options.$append(<option value={i}>{v.name}</option>);
+			otherwise
+				self#ui-projects.state.disabled = true;
+		}
+
+		function IsIconNameInUse(name, hash)
+		{
+			for(var (k,v) in _obj.dic_icons)
+			{
+				if(v == name && k != hash)
+					return true;
+			}
+			return false;
+		}
+
+		function IconAddRmv(add, obj_icon)// generates icon ID when adding
+		{
+			if(!_active)
+			{
+				Growl("Please, activate a project at home screen for adding icons to it.")
+				return false;
+			}
+
+			if(add)
+			{
+				function CreateIconID()
+				{
+					var name = obj_icon.arr_tags[0];
+					name = name.replace(".svg", "");
+					name = name.replace(" ", "-");
+
+					while(IsIconNameInUse(name, ""))
+					{
+						var regx = /-[0-9]+$/.exec(name);
+						if(regx == null)
+							name = name + "-1";
+						else
+						{
+							var i = regx[0].substr(1).toInteger() + 1;
+							name = name.substring(0, name.length - regx[0].length) + "-" + i;
+						}
+					}
+					return name;
+				}
+
+				_obj.dic_icons[obj_icon.hash] = CreateIconID();
+			} else {
+				delete _obj.dic_icons[obj_icon.hash];
+			}
+
+			_el_project.$(.icount).text = "(" + _obj.dic_icons.length + " icons)";
+			
+			Settings.StoreWork();
+			RegenerateSVGSprite();
+			return true;
+		}
+
+		function IconIsChecked(hash)
+		{
+			return !!_obj.dic_icons[hash];
+		}
+
+		function IconGetName(obj_icon)
+		{
+			return _obj.dic_icons[obj_icon.hash];
+		}
+		function IconSetName(obj_icon, name)
+		{
+			_obj.dic_icons[obj_icon.hash] = name;
+			Settings.StoreWork();
+			RegenerateSVGSprite();
+		}
+
+		function ListProject()
+		{
+			self#ui-search.Clear();
+			self#ui-search.AddTag("project icons: " + _obj.name);
+
+			isource.ResetByProj(_obj.dic_icons);
+			ListUI.ResetViewAndLoad();
+		}
+
+		function RegenerateSVGSprite()
+		{
+			self.timer(1000, function() {
+				var dic_icons = _obj.dic_icons.clone();
+				view.Host_GenerateSVGSprite(_svg_output_path, dic_icons);
+			});
+		}
+	}
+
+	function Setup()
+	{
+		Utils.installLinkHandler(self);
+
+		self#back.onClick = 
+		self#ui-search.OnClose = ::ShowHome();
+
+		function SetSize(inc) {
+			_isize = (_isize + (inc ? 1 : -1)).limit(0,_arr_sizes.length-1);
+			self.style.variable("icon-size", px(_arr_sizes[_isize]));
+			self#list.style#border-spacing = px(_arr_spacing[_isize]);
+			self#list.style#margin-left = px(1);
+			self#list.style#margin-left = undefined;
+		}
+
+		self#btn-size-up.on("click", ::SetSize(true));
+		self#btn-size-up.on("dblclick", ::SetSize(true));
+		self#btn-size-down.on("click", ::SetSize(false));
+		self#btn-size-down.on("dblclick", ::SetSize(false));
+		self#btn-color.onClick = function() {
+			self.@#black = self.@#black ? undefined : "true";
+		};
+
+		self#scroller.on("~mousewheel", function(evt) {
+			if(evt.ctrlKey || evt.commandKey)
+			{
+				if(evt.wheelDelta != 0)
+					SetSize(evt.wheelDelta > 0.1);
+				return true;
+			}
+		});
+	}
+
+	function SetupHome()
+	{
+		self#ion.onClick = ::Sciter.launch("https://designarsenal.co/#icondrop");
+		if(Settings.ns_data.da_dismiss)
+		{
+			self#ion.remove();
+		} else {
+			self#ion.$(icon).onClick = function() {
+				self#ion.remove();
+				Settings.ns_data.da_dismiss = true;
+				Settings.StoreWork();
+				return true;
+			};
+		}
+		
+		// Section 1: icon packs
+		if(!Utils.InDBGView)
+		{
+			var arr_sources = isource.GetSources();
+			for(var (idx, source) in arr_sources)
+				self#ui-packsel.options.$append(<option value={idx}>{source.name}</option>);
+		}
+
+		self#ui-packsel.on("change", function() {
+			ListUI.ListPack(this.value, this.$(option:checked).text);
+			self.timer(100, ::self#ui-packsel.value = undefined);
+		});
+
+		// Section 2: collections
+		self#info-cols.onClick = function() {
+			view.Host_RevealDir(Consts.COLLECTIONS_DIR);
+		};
+
+		// Section 3: projects
+		Proj.RelistProjects();
+
+		self#ui-projects.on("change", function() {
+			Proj.SelectProject(this.value);
+		});
+
+		self#btn-rmv-project.onClick = function() {
+			var res = view.msgbox(#question, "Do you really want to remove this project?", Consts.APP_NAME, [#yes, #no]);
+			if(res == #yes)
+			{
+				var idx = self#ui-projects.value;
+				self#ui-projects.value = undefined;
+
+				Settings.ns_data.arr_projects.remove(idx);
+				Settings.StoreWork();
+				Proj.RelistProjects();
+				Proj.SelectProject(undefined);
+			}
+		};
+
+		self#btn-add-project.onClick = function() {
+			var title;
+			var res = view.msgbox(#information, "Name of the project: <br><input !text />", "New project", [#ok, #cancel], function(el_root) { el_root.$(input).state.focus = true; }, function(el_root, id) {
+				if(id==#ok)
+				{
+					title = el_root.$(input).value;
+					if(title.trim().length==0)
+						return false;
+				}
+				return true;
+			});
+
+			if(res!=#ok)
+				return true;
+
+			view.msgbox(#information, "Choose the directory where you want the generated .svg sprite to be saved.\n(Output file will be named 'icon-sprites.svg')", Consts.APPNAME);
+			var dir = view.selectFolder("SVG sprite output directory");
+			if(dir)
+			{
+				if(dir[dir.length-1] != '/')
+					dir = dir + "/";
+
+				Settings.ns_data.arr_projects.push({
+					dir: dir,
+					name: title,
+					dic_icons: {}
+				});
+				Settings.StoreWork();
+				Proj.RelistProjects();
+				Proj.SelectProject(Settings.ns_data.arr_projects.length-1);
+			}
+			return true;
+		};
+	}
+
+	function CloseSearch()
+	{
+		ShowHome();
+	}
+
+	function ShowMain()
+	{
+		if(!_inhome)
+			return;
+		_inhome = false;
+
+		self#home.hide();
+		self#main.show();
+		self#back.show();
+		self#toolbar.show();
+	}
+
+	function ShowHome()
+	{
+		_inhome = true;
+		
+		self#ui-search.Clear();
+		self#ui-search.OnSearch = :needle:ListUI.ListSearch(needle);
+
+		self#main.hide();
+		self#home.show();
+		self#icn-info.hide();
+		self#btn-search-clear.hide();
+		self#back.hide();
+		self#toolbar.hide();
+	}
+}
+
+namespace ListUI
+{
+	function Setup()
+	{
+		self#btn-load-more.on("click", function() {
+			this.hide();
+			LoadItensBulk();
+		});
+
+		self#list.on("click", "icn", function(evt) {
+			if(evt.mainButton)
+				IconInfo.ShowIconInfo(this.icon);
+		});
+	}
+
+	function ListSearch(needle)
+	{
+		isource.ResetByNeedle(needle);
+		ResetViewAndLoad();
+	}
+	
+	function ListPack(idx, name)
+	{
+		self#ui-search.Clear();
+		self#ui-search.AddTag("pack: " + name);
+
+		isource.ResetBySource(idx);
+		ResetViewAndLoad();
+	}
+
+	function ListStore(entry)
+	{
+		self#ui-search.Clear();
+		self#ui-search.AddTag("pack: " + entry.pack_name);
+
+		isource.ResetByStore(entry.id);
+		ResetViewAndLoad();
+	}
+
+	// Internal
+	function ResetViewAndLoad()
+	{
+		self#btn-search-clear.show();
+		self#btn-load-more.hide();
+		self#list.clear();
+		UI.ShowMain();
+		isource.ResetPosOnly();
+		LoadItensBulk();
+	}
+
+	function LoadItensBulk()
+	{
+		var cnt = 0;
+		var hprev = 0;
+
+		isource.LoadBulk(function(icon) {
+			var el_icon = IconBehavior.Create(icon);
+
+			if(cnt++ >= 120)
+			{
+				if(self#list.box(#height, #content) > hprev)
+				{
+					el_icon.remove();
+
+					self#btn-load-more.show();
+					return false;
+				}
+			}
+			hprev = self#list.box(#height);
+			return true;
+		});
+
+		if(self#list.length==0)
+			self#noicon.show();
+		else
+			self#noicon.hide();
+	}
+}
+
+function Setup()
+{
+	UI.Setup();
+	UI.Proj.Setup();
+	UI.SetupHome();
+	ListUI.Setup();
+	IconInfo.Setup();
+
+	self.post(::UI.ShowHome());
+}

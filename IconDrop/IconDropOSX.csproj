@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{77C8C5E7-4AB3-49FF-B8CD-4EE0B850576A}</ProjectGuid>
+    <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>IconDrop</RootNamespace>
+    <AssemblyName>IconDrop</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>__MACOS__;DEBUG;__UNIFIED__;OSX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CodeSigningKey>Mac Developer</CodeSigningKey>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>true</UseSGen>
+    <UseRefCounting>true</UseRefCounting>
+    <PlatformTarget>x64</PlatformTarget>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp -r ${ProjectDir}/Shared ${TargetDir}/IconDrop.app/Contents</command>
+        </Command>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>sh scripts/packOSX.sh</command>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
+    <AOTMode>None</AOTMode>
+    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType></DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>true</EnableCodeSigning>
+    <CreatePackage>true</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>true</IncludeMonoRuntime>
+    <UseSGen>true</UseSGen>
+    <UseRefCounting>true</UseRefCounting>
+    <LinkMode>SdkOnly</LinkMode>
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants>__MACOS__;__UNIFIED__;OSX;APP_ID</DefineConstants>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>sh scripts/packOSX.sh</command>
+        </Command>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>mkdir -p ${TargetDir}/IconDrop.app/Contents/</command>
+        </Command>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>cp -r ${ProjectDir}/Shared ${TargetDir}/IconDrop.app/Contents</command>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
+    <CodeSigningKey>Developer ID Application: Ramon Mendes (58839ES96Q)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer</PackageSigningKey>
+    <AOTMode>None</AOTMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Mac" />
+    <Reference Include="SciterSharpOSX">
+      <HintPath>..\..\SciterSharp\SciterSharp\bin\Release\SciterSharpOSX.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Assets.xcassets\AppIcon-2.appiconset\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="App.config" />
+    <None Include="res\index.html" />
+    <None Include="res\spriter.html" />
+    <None Include="res\unittest.html" />
+    <None Include="res\unittestSVG.html" />
+    <None Include="res\css\global.css" />
+    <None Include="res\css\home.css" />
+    <None Include="res\css\icn-info.css" />
+    <None Include="res\css\iconstore.css" />
+    <None Include="res\css\list.css" />
+    <None Include="res\css\spriter.css" />
+    <None Include="res\css\style.css" />
+    <None Include="res\css\fontello\idrop-font.css" />
+    <None Include="res\css\fontello\idrop-svg.css" />
+    <None Include="res\css\fontello\idrop.ttf" />
+    <None Include="res\css\fonts\Hack-Bold.ttf" />
+    <None Include="res\css\fonts\Hack-BoldItalic.ttf" />
+    <None Include="res\css\fonts\Hack-Italic.ttf" />
+    <None Include="res\css\fonts\Hack-Regular.ttf" />
+    <None Include="res\css\fonts\Shumi.otf" />
+    <None Include="res\css\fonts\alphanum20.ttf" />
+    <None Include="res\css\fonts\fonts.css" />
+    <None Include="res\img\busy.gif" />
+    <None Include="res\img\logo.svg" />
+    <None Include="res\img\nyan.gif" />
+    <None Include="res\img\quantum_spinner.gif" />
+    <None Include="res\lib_growl\lib_growl.css" />
+    <None Include="res\lib_growl\lib_growl.tis" />
+    <None Include="res\lib_menu\menu-chrome.css" />
+    <None Include="res\lib_menu\toggler-knob.svg" />
+    <None Include="res\lib_menu\toggler.css" />
+    <None Include="res\lib_menu\toggler2.css" />
+    <None Include="res\lib_menu\unittes.html" />
+    <None Include="res\lib_poptip\lib_poptip.css" />
+    <None Include="res\lib_poptip\lib_poptip.tis" />
+    <None Include="res\lib_poptip\unittest.html" />
+    <None Include="res\lib_settings\settings.tis" />
+    <None Include="res\lib_settings\unittest.html" />
+    <None Include="res\tis\UI.tis" />
+    <None Include="res\tis\collections.tis" />
+    <None Include="res\tis\consts.tis" />
+    <None Include="res\tis\dropzone.tis" />
+    <None Include="res\tis\icon_behavior.tis" />
+    <None Include="res\tis\icon_info.tis" />
+    <None Include="res\tis\icon_store.tis" />
+    <None Include="res\tis\keyboard.tis" />
+    <None Include="scripts\preBuildOSX.sh" />
+    <None Include="scripts\packWindows.bat" />
+    <None Include="scripts\packfolder" />
+    <None Include="scripts\packfolder.exe" />
+    <None Include="scripts\preBuild.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArchiveResource.cs" />
+    <Compile Include="Src\App.cs" />
+    <Compile Include="Src\ConstsGlobals.cs" />
+    <Compile Include="Src\ConstsVersion.cs" />
+    <Compile Include="Src\Mono.cs" />
+    <Compile Include="Src\ProgramOSX.cs" />
+    <Compile Include="Src\ProgramWL.cs" />
+    <Compile Include="Src\SimpleBSON.cs" />
+    <Compile Include="Src\Utils.cs" />
+    <Compile Include="Src\Data\Collections.cs" />
+    <Compile Include="Src\Data\Icon.cs" />
+    <Compile Include="Src\Data\Joiner.cs" />
+    <Compile Include="Src\Data\Library.cs" />
+    <Compile Include="Src\Data\Store.cs" />
+    <Compile Include="Src\Hosting\DnDOSX.cs" />
+    <Compile Include="Src\Hosting\Host.cs" />
+    <Compile Include="Src\Hosting\IconsSource.cs" />
+    <Compile Include="Src\Hosting\SKIconCode.cs" />
+    <Compile Include="Src\Hosting\WindowOSX.cs" />
+    <Compile Include="Src\Hosting\WindowUnittest.cs" />
+    <Compile Include="Src\Hosting\WindowWL.cs" />
+    <Compile Include="Src\Native\SingleInstance.cs" />
+    <Compile Include="Src\Svg\SvgParser.cs" />
+    <Compile Include="Src\Svg\SvgSpriteXML.cs" />
+    <Compile Include="Src\Svg\SvgXML.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="libsciter-osx-64.dylib">
+      <Kind>Dynamic</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\drop.png" />
+    <BundleResource Include="Resources\cursor.png" />
+    <BundleResource Include="Resources\IconMain.icns" />
+    <BundleResource Include="res\img\activate.png" />
+    <BundleResource Include="res\img\arrow2.png" />
+    <BundleResource Include="res\img\grain.png" />
+    <BundleResource Include="res\img\loading.png" />
+    <BundleResource Include="res\img\q1.png" />
+    <BundleResource Include="res\img\q2.png" />
+    <BundleResource Include="res\img\q3.png" />
+    <BundleResource Include="res\img\q4.png" />
+    <BundleResource Include="res\img\subheader_bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon-2.appiconset\Contents.json" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+</Project>

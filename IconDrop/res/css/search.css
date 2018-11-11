@@ -1,0 +1,139 @@
+// #ui-search
+#ui-search
+{
+	flow: horizontal;
+	vertical-align: middle;
+	overflow: hidden;
+	
+	min-width: 200px;
+	max-width: 320px;
+
+	size: 1.1*;
+	margin: 0 *;
+	padding: 0;
+
+	background: #F5F8FA;
+	border-radius: 2px;
+
+	background-image: url(path:M363.91 181.955C363.91 81.473 282.44 0 181.955 0 81.474 0 0 81.473 0 181.955s81.474 181.95 181.956 181.95c100.484 0 181.953-81.468 181.953-181.95zm-181.954 136.46c-75.252 0-136.465-61.207-136.465-136.46 0-75.25 61.214-136.464 136.466-136.464 75.25 0 136.468 61.214 136.468 136.466 0 75.252-61.218 136.46-136.468 136.46zM471.882 407.567L360.567 296.243c-16.586 25.795-38.536 47.734-64.33 64.32L407.56 471.89c17.772 17.768 46.587 17.768 64.32 0 17.774-17.74 17.774-46.554.002-64.32z);
+	background-repeat: no-repeat;
+	background-size: 1.1em;
+	background-position-top: 48%;
+	background-position-right: .7em;
+	fill: #ced4d8;
+	font-size: 12px;
+
+	prototype: UISearchBehavior url(../tis/behavior_ui_search.tis);
+}
+
+#ui-search hspacer { height: *; flow: horizontal; vertical-align: middle; }
+#ui-search widget
+{
+	height: 1em;
+	width: *;
+	padding: 0;
+	padding-left: 10px;
+	padding-bottom: 2px;
+
+	background: none;
+	border: none;
+}
+
+#ui-search #btn-ddmenu
+{
+	padding: 0;
+	height: *;
+	width: 15px;
+	margin-right: 30px;
+	background: none;
+	background-image: url(path:M571 171q0-14-10-25t-25-10h-500q-15 0-25 10t-11 25 11 26l250 250q10 10 25 10t25-10l250-250q10-11 10-26z);
+	background-repeat: no-repeat;
+	background-size: 0.7em;
+	background-position-left: 3px;
+	background-position-top: 48%;
+	fill: #ced4d8;
+}
+#ui-search #btn-ddmenu:hover { fill: #284e6f; }
+
+#ui-search #btn-search-clear
+{
+	visibility: none;
+
+	padding: 0 9px;
+	height: *;
+	width: 18px;
+	background: none;
+	foreground-image: url(path:M469 819q194 0 331-137t138-332-138-331-331-138-331 138-138 331 138 332 331 137z m0-834q151 0 258 107t107 258-107 258-258 107-258-107-107-258 107-258 258-107z m36 365l139-137q12-13 5-29t-24-16q-11 0-19 7l-137 139-138-139q-7-7-18-7-17 0-24 16t5 29l139 137-139 138q-18 17 1 36t36 1l138-138 137 138q18 18 37-1t1-36z);
+	foreground-repeat: no-repeat;
+	foreground-size: 1.3em;
+	foreground-position: center;
+	fill: #284e6f;
+	background: white;
+	border: none;
+	border-radius: 0;
+}
+#ui-search button:hover
+{
+	background-color: #D8DEE3 !important;
+}
+
+#ui-search tags
+{
+	visibility: none;
+	height: *;
+	width: max-content;
+	padding: 2px;
+	display: block;
+	flow: horizontal;
+	border-spacing: 2px;
+	margin-right: -2px;
+}
+
+
+
+// #ui-insta-search
+#ui-insta-search
+{
+	flow: horizontal;
+	margin-left: *;
+	width: 170px;
+
+	background-image: url(path:M363.91 181.955C363.91 81.473 282.44 0 181.955 0 81.474 0 0 81.473 0 181.955s81.474 181.95 181.956 181.95c100.484 0 181.953-81.468 181.953-181.95zm-181.954 136.46c-75.252 0-136.465-61.207-136.465-136.46 0-75.25 61.214-136.464 136.466-136.464 75.25 0 136.468 61.214 136.468 136.466 0 75.252-61.218 136.46-136.468 136.46zM471.882 407.567L360.567 296.243c-16.586 25.795-38.536 47.734-64.33 64.32L407.56 471.89c17.772 17.768 46.587 17.768 64.32 0 17.774-17.74 17.774-46.554.002-64.32z);
+	background-repeat: no-repeat;
+	background-size: 1.1em;
+	background-position-top: 48%;
+	background-position-right: .5em;
+	fill: #ced4d8;
+
+	prototype: UIInstaSearchBehavior url(../tis/behavior_ui_search.tis);
+}
+#ui-insta-search:hover,
+#ui-insta-search:owns-focus
+{
+	border-radius: 2px;
+	outline: solid 1px #CCCEDB;
+}
+#ui-insta-search widget
+{
+	width: *;
+	background: none;
+	border: none;
+}
+#ui-insta-search button
+{
+	visibility: none;
+
+	padding: 0 4px;
+	height: *;
+	width: 16px;
+	background: none;
+	foreground-image: url(path:M469 819q194 0 331-137t138-332-138-331-331-138-331 138-138 331 138 332 331 137z m0-834q151 0 258 107t107 258-107 258-258 107-258-107-107-258 107-258 258-107z m36 365l139-137q12-13 5-29t-24-16q-11 0-19 7l-137 139-138-139q-7-7-18-7-17 0-24 16t5 29l139 137-139 138q-18 17 1 36t36 1l138-138 137 138q18 18 37-1t1-36z);
+	foreground-repeat: no-repeat;
+	foreground-size: 1.3em;
+	foreground-position: center;
+	fill: #284e6f;
+	background: white;
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+}

@@ -1,0 +1,23 @@
+<!-- OmniView:on, HtmlView:off -->
+<html>
+<head>
+	<style>
+		@import url(css/global.css);
+
+		main { height: 50px; }
+	</style>
+
+	<script type="text/tiscript">
+		self.post(function() {
+			self#ui-search.Clear();
+			self#ui-search.AddTag("pack: ");
+		});
+	</script>
+</head>
+
+<body>
+	<main>
+		<div #ui-search />
+	</main>
+</body>
+</html>

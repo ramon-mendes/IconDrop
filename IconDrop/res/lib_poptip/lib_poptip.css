@@ -1,0 +1,11 @@
+.poptip-popup
+{
+	margin-left: 20px;
+	visibility: none;
+	padding: 3px 5px;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.8);
+	color: white;
+	font-size: 12px;
+}
+[poptip] { prototype: PoptipBehavior url(lib_poptip.tis); }

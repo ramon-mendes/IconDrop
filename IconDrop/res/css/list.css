@@ -1,0 +1,132 @@
+#scroller
+{
+	size: *;
+	overflow-y: auto;
+	flow: vertical;
+	horizontal-align: center;
+}
+
+#list
+{
+	min-height: *;
+	height: max-content;
+	flow: horizontal-flow;
+	border-spacing: var(icon-spacing, 20px);
+
+	margin: 0;
+	padding: 10px 15px;
+
+	style-set: ListIcon;
+}
+
+#list icn:not(.colored) svg { fill: black; }
+[black] #list icn:not(.colored) svg { fill: white; }
+
+[black] #scroller { background: black; }
+[black] #list { background: black; }
+[black] #btn-load-more { background: #141414; color: white; border-color: white; }
+
+#drag-img { height: 0; overflow: hidden; position: absolute; }
+#drag-img svg
+{
+	display: block;
+	size: 120px;
+	background: none;
+	foreground-position: center;
+	foreground-size: contain;
+	foreground-repeat: no-repeat;
+	fill: black;
+	stroke: none;
+}
+[black] svg { fill: white !important; }
+
+
+#noicon
+{
+	padding: 16px 20px;
+	font-size: 14px;
+}
+
+#btn-load-more
+{
+	width: max-content;
+	padding: 0;
+
+	visibility: none;
+	margin: 0 *;
+	margin-bottom: 10px;
+	padding: 4px 10px;
+}
+
+@set ListIcon
+{
+	icn
+	{
+		flow: stack;
+		position: relative;
+		prototype: IconBehavior;
+
+		display: block;
+		padding: 10px;
+		border: solid 2px transparent;
+	}
+	
+	icn:hover
+	{
+		border-radius: 50%;
+		background: #444;
+	}
+
+	icn:checked
+	{
+		border-radius: 50%;
+		border-color: #d88;
+	}
+	icn:checked:hover { background: #666; }
+	
+	icn svg
+	{
+		size: var(icon-size, 20px);
+		background: none;
+		foreground-position: center;
+		foreground-size: contain;
+		foreground-repeat: no-repeat;
+	}
+	icn svg:busy
+	{
+		background: url(../img/busy.gif) center no-repeat;
+	}
+
+	icn.flat svg { fill: black; stroke: none; }
+	icn.flat:hover svg { fill: white !important; }
+
+	icn btn
+	{
+		display: block;
+		visibility: hidden;
+		flow: stack;
+		vertical-align: middle;
+		horizontal-align: center;
+		position: absolute;
+		right: -9px;
+		top: -9px;
+		size: 16px;
+		border-radius: 50%;
+		background: #666;
+		border: solid 1px #dd8888;
+		cursor: pointer;
+	}
+	icn btn.add
+	{
+		border: solid 1px #a5ccf1;
+	}
+
+	icn:hover btn { visibility: visible; }
+	icn btn.rmv:hover { background: #dd8888; }
+	icn btn.add:hover { background: #a5ccf1; }
+	icn btn icon
+	{
+		size: 9px;
+		fill: white;
+	}
+}

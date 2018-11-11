@@ -1,0 +1,93 @@
+﻿class UISearchBehavior : Element
+{
+	this var _has_something = false;
+
+	function attached()
+	{
+		var el_this = this;
+
+		this.$append(<hspacer><tags #ui-search-tags /><widget #ui-search-txt type="text" /></hspacer>);
+
+		if(this.@#has-menu !== undefined)
+		{
+			var el_dd = this.$append(<button #btn-ddmenu />);
+			el_dd.onClick = ::(this super).OnShowDD();
+		}
+
+		this.$append(<button #btn-search-clear />);
+
+		self#btn-search-clear.onClick = function() {
+			el_this.InternalClearClose();
+		};
+
+		self#ui-search-txt.on("focusin", function() {
+			self.post(::self#ui-search-txt.doSelectAll());
+		});
+
+		self#ui-search-txt.on("keydown", function(evt) {
+			if(evt.keyCode == Event.VK_RETURN)
+			{
+				var needle = self#ui-search-txt.value.trim().toLowerCase();
+				if(needle)
+				{
+					if(el_this.@#has-menu !== undefined)
+						self#btn-ddmenu.hide();
+					self#btn-search-clear.show();
+					self#ui-search-txt.doSelectAll();
+					el_this.OnSearch(needle);
+					el_this._has_something = true;
+				}
+				return true;
+			}
+		});
+
+		self.on("keydown", function(evt) {
+			if(evt.keyCode == Event.VK_ESCAPE)
+			{
+				el_this.InternalClearClose();
+				return true;
+			}
+		});
+	}
+
+	function InternalClearClose()
+	{
+		if(this._has_something)
+		{
+			this.Clear();
+			this.OnClose();
+			this._has_something = false;
+		}
+	}
+
+	function Clear()
+	{
+		self#ui-search-txt.value = "";
+		self#ui-search-txt.show();
+		if(this.@#has-menu !== undefined)
+			self#btn-ddmenu.show();
+		self#ui-search-tags.hide();
+		self#btn-search-clear.hide();
+		self#ui-search-tags.clear();
+		self.post(::view.focus = self#ui-search-txt);
+	}
+
+	function AddTag(html, textinput = false)
+	{
+		if(this.@#has-menu !== undefined)
+			self#btn-ddmenu.hide();
+		if(!textinput)
+			self#ui-search-txt.hide();
+		self#ui-search-tags.show();
+		self#btn-search-clear.show();
+		var el_tag = self#ui-search-tags.$append(<tag />);
+		el_tag.html = html;
+
+		this._has_something = true;
+	}
+
+	// overridable
+	function OnClose() { }
+	function OnSearch(needle) { }
+	function OnShowDD { }
+}

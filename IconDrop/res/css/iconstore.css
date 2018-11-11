@@ -1,0 +1,87 @@
+#ui-store-search
+{
+	flow: horizontal;
+	margin-left: *;
+	width: 170px;
+
+	background-image: url(path:M363.91 181.955C363.91 81.473 282.44 0 181.955 0 81.474 0 0 81.473 0 181.955s81.474 181.95 181.956 181.95c100.484 0 181.953-81.468 181.953-181.95zm-181.954 136.46c-75.252 0-136.465-61.207-136.465-136.46 0-75.25 61.214-136.464 136.466-136.464 75.25 0 136.468 61.214 136.468 136.466 0 75.252-61.218 136.46-136.468 136.46zM471.882 407.567L360.567 296.243c-16.586 25.795-38.536 47.734-64.33 64.32L407.56 471.89c17.772 17.768 46.587 17.768 64.32 0 17.774-17.74 17.774-46.554.002-64.32z);
+	background-repeat: no-repeat;
+	background-size: 1.1em;
+	background-position-top: 48%;
+	background-position-right: .5em;
+	fill: #ced4d8;
+}
+#ui-store-search:hover,
+#ui-store-search:owns-focus
+{
+	border-radius: 2px;
+	outline: solid 1px #CCCEDB;
+}
+#ui-store-search-txt
+{
+	width: *;
+	background: none;
+	border: none;
+}
+#ui-store-search button
+{
+	visibility: none;
+
+	padding: 0 4px;
+	height: *;
+	width: 16px;
+	background: none;
+	foreground-image: url(path:M469 819q194 0 331-137t138-332-138-331-331-138-331 138-138 331 138 332 331 137z m0-834q151 0 258 107t107 258-107 258-258 107-258-107-107-258 107-258 258-107z m36 365l139-137q12-13 5-29t-24-16q-11 0-19 7l-137 139-138-139q-7-7-18-7-17 0-24 16t5 29l139 137-139 138q-18 17 1 36t36 1l138-138 137 138q18 18 37-1t1-36z);
+	foreground-repeat: no-repeat;
+	foreground-size: 1.3em;
+	foreground-position: center;
+	fill: #284e6f;
+	background: white;
+	border: none;
+	border-radius: 0;
+	cursor: pointer;
+}
+
+
+#store-list
+{
+	margin-right: -1px;	
+	margin-top: 8px;
+	flow: row(div, div);
+	border-spacing: 25px;
+}
+#store-list div
+{
+	width: *;
+	padding: 4px;
+	border-radius: 4px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	background-color: #f8f8f8;
+}
+#store-list div.loading
+{
+	foreground: url(../img/busy.gif) center no-repeat;
+	foreground-color: rgba(255, 255, 255, 0.84);
+}
+#store-list div:hover
+{
+	background-color: #f5f5f5;
+	cursor: pointer;
+}
+#store-list div img
+{
+	width: *;
+}
+#store-list div h2
+{
+	margin: 10px 0 4px 5px;
+	font-size: 14px;
+	color: #888597;
+}
+#store-list div:hover h2 { color: #635f79; }
+
+#btn-store-load
+{
+	display: block;
+	margin: 20px *;
+}

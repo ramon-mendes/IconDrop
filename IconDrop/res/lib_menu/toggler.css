@@ -1,0 +1,45 @@
+button[type=toggler]
+{
+	style-set: "std-toggler";
+}
+
+@set std-toggler
+{
+	:root
+	{
+		margin-left: *;
+		flow: stack;
+		behavior:check;
+		background:window;
+		overflow:hidden;
+		width:max-content;
+		height: 14px;
+		
+		padding:0;
+		border:1px solid threedshadow;
+		border-radius:8px;
+		transition: none;
+
+		foreground-image:url(toggler-knob.svg);
+		foreground-size: 1.6em;
+		foreground-repeat:no-repeat;
+		foreground-position:100% 50%;
+
+		foreground-clip:border-box;
+		font-rendering-mode: classic;
+	}
+
+	:root:checked { foreground-position: 0% 50%; }
+
+	:root > label { display: block; height: *; margin: 0; padding:0 0.6em; font-size: 10px; line-height: 14px; }
+
+	:root > label.true { padding-left:2em; background-color:highlight; color: highlighttext; }
+	:root > label.false { padding-right:2em; background-color:window; }
+
+	:root:checked > label.false { transform: translate(-100%,0); }
+	:root:not(:checked) > label.true  { transform: translate(100%,0); }
+
+	/*do transitions only after behavior assignment - when it is UI operational */
+	:root:ready { transition: foreground-position(linear,200ms); }
+	:root:ready > label { transition: transform(linear,200ms); }
+}

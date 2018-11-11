@@ -1,0 +1,261 @@
+<!-- OmniView:on -->
+<html>
+<head>
+	<style>
+		@import url(lib_menu/menu-chrome.css);
+		@import url(lib_growl/lib_growl.css);
+		@import url(lib_poptip/lib_poptip.css);
+
+		@import url(css/global.css);
+		@import url(css/style.css);
+		@import url(css/list.css);
+		@import url(css/home.css);
+		@import url(css/icn-info.css);
+		@import url(css/iconstore.css);
+
+		isource { behavior: IconsSource; }
+	</style>
+
+	<script type="text/tiscript">
+		include "lib_settings/settings.tis";
+		include "lib_growl/lib_growl.tis";
+		include "tis/consts.tis";
+		include "tis/UI.tis";
+		include "tis/keyboard.tis";
+		include "tis/icon_info.tis";
+		include "tis/icon_behavior.tis";
+		include "tis/icon_store.tis";
+		include "tis/collections.tis";
+
+		Setup();
+
+		if(Utils.IsWindows && !Settings.ns_data.hint_closing)
+		{
+			self.closing = function() {
+				Settings.ns_data.hint_closing = true;
+				Settings.StoreWork();
+				view.msgbox(#information, "HINT!\nClosing Icon Drop window minimizes it to your tray \nas a 'drop' icon so you easily open it. To actually \nterminate the app, right-click the icon and choose 'Quit'.\n\n", Consts.APPNAME);
+				view.windowState = View.WINDOW_HIDDEN;
+				return false;
+			};
+		}
+
+		if(Utils.IsOSX)
+		{
+			view.windowResizable = false;
+		}
+
+		function View_FocusIt()
+		{
+			var el_search = $(#ui-search widget);
+			el_search.state.focus = true;
+			el_search.doSelectAll();
+
+			var el_popup = $(:popup);
+			if(el_popup)
+				el_popup.closePopup();
+		}
+
+		function View_ShowOSX(x, y, w, h, offx_arrow)
+		{
+			y = view.box(#top);
+			view.move(x, y, w, h);
+			view.windowState = View.WINDOW_SHOWN;
+			self#osx-arrow.style#margin-left = px(offx_arrow*2);
+			
+			View_FocusIt();
+		}
+	</script>
+
+	<isource />
+
+	<menu .menu-chromed #menu-icon .outline>
+		<div .inner>
+			<ul>
+				<li>Copy Skia code</li>
+			</ul>
+		</div>
+	</menu>
+
+	<menu .menu-chromed #menu-pro .outline style="margin-left: -6px; margin-top: -2px">
+		<div .inner>
+			<ul>
+				<li cmd="site">Go to site to purchase</li>
+				<li cmd="activate">Enter activation code</li>
+			</ul>
+		</div>
+	</menu>
+</head>
+
+<body>
+	<img src="img/arrow2.png" #osx-arrow.hide-win />
+
+	<div #osx-wraper>
+		<header>
+			<!--<img src="img/logo.svg" #logo />-->
+			<icon .icon-left-open #back />
+
+			<div #ui-search />
+
+			<hflow #toolbar>
+				<icon .icon-color-adjust #btn-color />
+				<icon .icon-resize-normal #btn-size-down />
+				<icon .icon-resize-full-1 #btn-size-up />
+			</hflow>
+		</header>
+
+		<div #drag-img>
+			<div>
+				<svg />
+			</div>
+		</div>
+
+		<main #main>
+			<div #scroller>
+				<div #noicon>No icon was found..</div>
+				<div #list />
+				<widget #btn-load-more.btn-red><icon .icon-plus />Load more...</widget>
+			</div>
+		</main>
+
+		<project .dbg>
+			Project: <b .name /> <b .icount />
+			<icon .icon-list #ui-proj-eye style="margin-left: *; margin-top: 2px;" poptip="List project icons" popnow />
+			<icon .icon-folder #ui-proj-folder poptip="Reveal icon sprite SVG output" popnow />
+			<icon .icon-cancel #ui-proj-close poptip="Deactivate project" popnow />
+		</project>
+		
+		<home #home>
+			<div #ion>
+				<vflow>
+					<span #free>Needing a better icon-manager?</span>
+					<span #pro>Check DESIGN ARSENAL!</span>
+				</vflow>
+				<icon .icon-cancel></icon>
+				
+				<!--<div #info-update>
+					An <b>updated version</b> of IconDrop is available!
+					<br />Latest version: <b><em style="font-style: normal" /> - <a href="http://icondrop.io/">Download it</a></b>
+				</div>-->
+			</div>
+
+			<h1>Home</h1>
+
+			<div #home-scroller>
+				<section>
+					<p>List icon pack:</p>
+					<select #ui-packsel as="integer" novalue="" />
+				</section>
+
+				<section>
+					<hflow>
+						<div style="width: *">
+							<p>List icon collection:</p>
+							<select #ui-collections as="integer" disabled novalue="" />
+						</div>
+
+						<div style="width: *">
+							<p>Manage icon collections:</p>
+							<div #info-cols>
+								<em>Collections are just regular folders with SVG files inside it that you can manage in <span .hide-osx>Windows Explorer</span><span .hide-win>Finder</span>.<br />Click here to open the root directory.</em>
+								<icon .icon-folder-open-empty />
+							</div>
+						</div>
+					</hflow>
+				</section>
+
+				<section>
+					<p>Activate SVG sprites project:</p>
+					<hflow .txt>
+						<select #ui-projects as="integer" disabled novalue="" />
+						<widget .btn-red disabled #btn-rmv-project>Remove</widget>
+						<widget .btn-blue #btn-add-project><icon .icon-plus />Add new</widget>
+					</hflow>
+				</section>
+
+				<section>
+					<hflow>
+						Online icons packs:
+
+						<div #ui-store-search>
+							<widget #ui-store-search-txt type="text" />
+							<button #btn-store-search-clear />
+						</div>
+					</hflow>
+
+					<div #store-list />
+					<button #btn-store-load .btn-blue><icon .icon-dot-3 /> Load more</button>
+				</section>
+			</div>
+		</home>
+
+		<div #icn-info>
+			<icn><svg #svg-thumb /></icn>
+
+			<vflow #area-details>
+				<div #info-area-lib>
+					<b>Tags:</b>
+					<div #info-tags.line></div>
+
+					<b>Pack:</b>
+					<a #info-pack.line />
+
+					<b>License:</b>
+					<a #info-license.line />
+				</div>
+
+				<div #info-area-col>
+					<b>Filename:</b>
+					<div #info-filename .line><span .tag /><icon .icon-folder poptip="Reveal file" popnow /></div>
+
+					<b>Collection:</b>
+					<div #info-collection .line><span .tag /><icon .icon-th-large-1 poptip="List icons of this collection" popnow /></div>
+				</div>
+
+				<div #info-area-store>
+					<b>Filename:</b>
+					<div #info-store-filename .line><span .tag /></div>
+
+					<b>Pack / author:</b>
+					<a #info-store-pack.line />
+				</div>
+
+				<b>Drag as PNG:</b>
+				<hflow #png-sizes>
+					<div>16</div>
+					<div>24</div>
+					<div>32</div>
+					<div>48</div>
+					<div>64</div>
+					<div>128</div>
+					<div>256</div>
+					<div>512</div>
+				</hflow>
+			</vflow>
+
+			<vflow #area-sprite>
+				<b>SVG sprite</b>
+
+				<tabs>
+					<tab #tab-warn-activate>
+						<em>Activate a SVG sprites project at Home screen for adding this icon to it</em>
+					</tab>
+					<tab #tab-btn-use>
+						<em>Click the '+' button besides the icon to add this SVG icon to the active project</em>
+					</tab>
+					<tab #tab-sprite>
+						<p>ID:</p>
+						<widget type="text" #ui-icon-name />
+						<em>Invalid ID, must only contain a..z, A..Z, - and _ (or ID is already in use)</em>
+						<p><button #ui-btn-usecopy.btn-blue><icon .icon-paste /> Copy SVG &lt;use&gt; code</button></p>
+					</tab>
+				</tabs>
+
+				<p><button #ui-btn-symbolcopy.btn-blue><icon .icon-paste /> Copy SVG &lt;symbol&gt; code</button></p>
+			</vflow>
+
+			<icon .icon-cancel #btn-info-close />
+		</div>
+	</div>
+</body>
+</html>

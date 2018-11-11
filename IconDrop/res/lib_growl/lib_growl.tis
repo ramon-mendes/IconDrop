@@ -1,0 +1,39 @@
+const GROWL_TIMEOUT = 5000;
+
+var el_box = $(body).$append(<div #growl-box />);
+$(body).insert(el_box, 0);
+
+function Growl(msg, kind = #info /*or #error, #success*/, timed = true)
+{
+	assert typeof msg == #string;
+	
+	//var el_growl = el_box.$prepend(<div .growl><span /><i .fd-cancel /></div>);
+	var el_growl = el_box.$append(<div .growl><span /></div>);
+	if(kind == #error)
+		el_growl.@.addClass("error");
+	else if(kind == #success)
+		el_growl.@.addClass("success");
+
+	/*el_growl[1].onClick = function() {
+		count();
+		el_growl.remove();
+	};*/
+
+	el_growl[0].html = msg.replace("\n", " <br/>");
+	el_growl.show();
+	el_growl.@#animate = true;
+
+	el_growl.fadeout = function() {
+		el_growl.@#fadeout = true;
+		el_growl.timer(1000, function() {
+			el_growl.remove();
+		});
+	};
+
+	if(timed)
+	{
+		el_growl.timer(GROWL_TIMEOUT, ::el_growl.fadeout());
+	}
+
+	return el_growl;
+}

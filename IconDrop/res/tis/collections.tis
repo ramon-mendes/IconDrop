@@ -1,0 +1,33 @@
+function ListCollection(name)
+{
+	self#ui-search.Clear();
+	self#ui-search.AddTag("collection: " + name);
+
+	isource.ResetByCollection(name);
+	ListUI.ResetViewAndLoad();
+}
+
+self#ui-collections.on("change", function() {
+	ListCollection(this.value);
+	self.timer(1000, ::self#ui-collections.value = undefined);
+});
+
+var demo_created = !!Settings.ns_data.col_demo;
+if(!demo_created)
+{
+	Settings.ns_data.demo_created = true;
+	Settings.StoreWork();
+}
+demo_created = false;
+
+if(!Utils.InDBGView)
+{
+	view.Host_SetupCollections(Consts.COLLECTIONS_DIR, !demo_created, function(arr_dirs, arr_count) {
+		self#ui-collections.options.clear();
+		self#ui-collections.state.disabled = false;
+		for(var (i, dir) in arr_dirs)
+			self#ui-collections.options.$append(<option value="{dir}">{dir} <em>({arr_count[i]} icons)</em></option>);
+		otherwise
+			self#ui-collections.state.disabled = true;
+	});
+}

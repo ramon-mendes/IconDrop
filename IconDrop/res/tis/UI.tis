@@ -200,6 +200,7 @@ namespace UI
 	function SetupHome()
 	{
 		self#ion.onClick = ::Sciter.launch("https://designarsenal.co/#icondrop");
+        
 		if(Settings.ns_data.da_dismiss)
 		{
 			self#ion.remove();

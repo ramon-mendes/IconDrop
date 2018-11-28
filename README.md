@@ -6,6 +6,6 @@ Essentially it comes filled with many ready-to-use icons packs to use in **Photo
 
 ---
 
-**Download:** [Windows](https://www.dropbox.com/s/h3fcpiocx2rjlon/IconDropWIN.zip?raw=1) or [OSX](https://www.dropbox.com/s/96gnkldoynprspg/OctoDeskdexOSX.zip?raw=1)
+**Download:** [Windows](https://www.dropbox.com/s/3zlfd7nvgcihd3i/IconDropWIN.zip?raw=1) or [OSX](https://www.dropbox.com/s/gxdjpt3fggj16v5/IconDropOSX.zip?raw=1)
 
 If you like Icon Drop, please, take a look at my other more powerfull tool called [Design Arsenal](https://designarsenal.co/#icondrop).

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Globalization;
 using System.Text;
 using SciterSharp;
-using IconDrop.Data;
 #if OSX
 using CoreGraphics;
 #endif
+using DesignArsenal.DataID;
 
-namespace IconDrop.Svg
+namespace DesignArsenal.Svg
 {
 	public class SvgParser
 	{
@@ -121,7 +121,7 @@ namespace IconDrop.Svg
 			{
 				if(_ic == _svg.Length)
 					return;
-
+				
 				StringBuilder sb = new StringBuilder();
 				char c = _svg[_ic];
 				if(char.IsLetter(c))

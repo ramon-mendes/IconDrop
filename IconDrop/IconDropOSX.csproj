@@ -172,6 +172,7 @@
     <Compile Include="Src\Svg\SvgParser.cs" />
     <Compile Include="Src\Svg\SvgSpriteXML.cs" />
     <Compile Include="Src\Svg\SvgXML.cs" />
+    <Compile Include="Src\Svg\SvgParser 2.cs" />
   </ItemGroup>
   <ItemGroup>
     <NativeReference Include="libsciter-osx-64.dylib">

@@ -274,9 +274,9 @@ namespace IconDrop.Hosting
 			//Debug.Assert(img.Length != 0);
 			//File.WriteAllBytes(_tmp_dragimg, img);
 
-			_tmp_dragimg = Consts.AppDir_Resources + "cursor.png";
+			var img = Consts.AppDir_Resources + "cursor.png";
 			
-			new DnDOSX().StartDnD(file, _tmp_dragimg, xView, yView, () =>
+			new DnDOSX().StartDnD(file, img, xView, yView, () =>
 			{
 				args[4].Call();
 			});

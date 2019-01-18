@@ -29,12 +29,14 @@
 
 		Setup();
 
-		if(Utils.IsWindows && !Settings.ns_data.hint_closing)
+		if(Utils.IsWindows)
 		{
 			self.closing = function() {
-				Settings.ns_data.hint_closing = true;
-				Settings.StoreWork();
-				view.msgbox(#information, "HINT!\nClosing Icon Drop window minimizes it to your tray \nas a 'drop' icon so you easily open it. To actually \nterminate the app, right-click the icon and choose 'Quit'.\n\n", Consts.APPNAME);
+				if(!Settings.ns_data.hint_closing) {
+					Settings.ns_data.hint_closing = true;
+					Settings.StoreWork();
+					view.msgbox(#information, "HINT!\nClosing Icon Drop window minimizes it to your tray \nas a 'drop' icon so you easily open it. To actually \nterminate the app, right-click the icon and choose 'Quit'.\n\n", Consts.APPNAME);
+				}
 				view.windowState = View.WINDOW_HIDDEN;
 				return false;
 			};
@@ -76,6 +78,15 @@
 			</ul>
 		</div>
 	</menu>
+
+	<menu .menu-chromed #menu-pro .outline style="margin-left: -6px; margin-top: -2px">
+		<div .inner>
+			<ul>
+				<li cmd="site">Go to site to purchase</li>
+				<li cmd="activate">Enter activation code</li>
+			</ul>
+		</div>
+	</menu>
 </head>
 
 <body>
@@ -95,11 +106,12 @@
 			</hflow>
 		</header>
 
-		<div #drag-img>
-			<div>
-				<svg />
-			</div>
-		</div>
+		<project>
+			Project: <b .name /> <b .icount />
+			<icon .icon-list #ui-proj-eye style="margin-left: *; margin-top: 2px;" poptip="List project icons" popnow />
+			<icon .icon-folder #ui-proj-folder poptip="Reveal icon sprite SVG output" popnow />
+			<icon .icon-cancel #ui-proj-close poptip="Deactivate project" popnow />
+		</project>
 
 		<main #main>
 			<div #scroller>
@@ -108,13 +120,6 @@
 				<widget #btn-load-more.btn-red><icon .icon-plus />Load more...</widget>
 			</div>
 		</main>
-
-		<project .dbg>
-			Project: <b .name /> <b .icount />
-			<icon .icon-list #ui-proj-eye style="margin-left: *; margin-top: 2px;" poptip="List project icons" popnow />
-			<icon .icon-folder #ui-proj-folder poptip="Reveal icon sprite SVG output" popnow />
-			<icon .icon-cancel #ui-proj-close poptip="Deactivate project" popnow />
-		</project>
 		
 		<home #home>
 			<div #ion>

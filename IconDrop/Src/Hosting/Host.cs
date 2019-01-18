@@ -264,18 +264,22 @@ namespace IconDrop.Hosting
 		}
 
 #if OSX
-		public bool Host_StartDnD(SciterElement el, SciterValue[] args, out SciterValue result)
+		public void Host_StartDnD(SciterValue[] args)
 		{
 			string file = args[0].Get("");
 			int xView = args[1].Get(-1);
 			int yView = args[2].Get(-1);
-			new DnDOSX().StartDnD(file, xView, yView, () =>
-			{
-				args[3].Call();
-			});
 
-			result = null;
-			return true;
+			//var img = args[3].GetBytes();
+			//Debug.Assert(img.Length != 0);
+			//File.WriteAllBytes(_tmp_dragimg, img);
+
+			_tmp_dragimg = Consts.AppDir_Resources + "cursor.png";
+			
+			new DnDOSX().StartDnD(file, _tmp_dragimg, xView, yView, () =>
+			{
+				args[4].Call();
+			});
 		}
 #endif
 	}

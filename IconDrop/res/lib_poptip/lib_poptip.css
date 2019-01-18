@@ -7,5 +7,6 @@
 	background: rgba(0, 0, 0, 0.8);
 	color: white;
 	font-size: 12px;
+	text-wrap: none;
 }
 [poptip] { prototype: PoptipBehavior url(lib_poptip.tis); }

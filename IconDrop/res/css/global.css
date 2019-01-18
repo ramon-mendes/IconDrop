@@ -11,6 +11,10 @@ html
 	//font-rendering-mode: classic;
 	font-family: system;
 }
+@media min-resolution > 96
+{
+	html, input, button, widget, select { font-size: 13px; }// DPI fix
+}
 
 body
 {

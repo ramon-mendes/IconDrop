@@ -43,16 +43,18 @@ namespace IconDrop.Hosting
 
 		private Action _completed;
 
-		public void StartDnD(string svgpath, int xView, int yView, Action completed)
+		public void StartDnD(string svgpath, string dragimgpath, int xView, int yView, Action completed)
 		{
 			Debug.Assert(File.Exists(svgpath));
+			Debug.Assert(File.Exists(dragimgpath));
 
 			_completed = completed;
 
 			NSDraggingItem di;
 			var url_pdf = NSUrl.FromFilename(svgpath);
 			di = new NSDraggingItem(url_pdf);
-			di.SetDraggingFrame(new CGRect(xView, yView, 26, 26), new NSImage(Consts.AppDir_Resources + "cursor.png"));
+			var img = new NSImage(dragimgpath);
+			di.SetDraggingFrame(new CGRect(xView, yView, img.Size.Width*2, img.Size.Height*2), img);// *2 wtf
 
 			NSEvent evt = NSApplication.SharedApplication.CurrentEvent;
 			var session = App.AppWnd._nsview.BeginDraggingSession(new[] { di }, evt, this);

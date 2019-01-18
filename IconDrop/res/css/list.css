@@ -25,19 +25,6 @@
 [black] #scroller { background: black; }
 [black] #list { background: black; }
 [black] #btn-load-more { background: #141414; color: white; border-color: white; }
-
-#drag-img { height: 0; overflow: hidden; position: absolute; }
-#drag-img svg
-{
-	display: block;
-	size: 120px;
-	background: none;
-	foreground-position: center;
-	foreground-size: contain;
-	foreground-repeat: no-repeat;
-	fill: black;
-	stroke: none;
-}
 [black] svg { fill: white !important; }
 
 

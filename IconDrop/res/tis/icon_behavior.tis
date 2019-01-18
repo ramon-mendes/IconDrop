@@ -72,27 +72,22 @@
 			var path = view.Host_SaveTempSVG(hash, !!self.@#black);
 			PerformFileDrag(path, hash, function(res) {
 				el_this.state.hover = false;
-			});
+			}, el_this.$(svg));
 
 			return true;
 		}
 	}
 
-	function PerformFileDrag(path, hash, on_complete)
+	function PerformFileDrag(path, hash, on_complete, el)
 	{
 		var (x, y) = view.cursorLocation();
 
 		if(Utils.IsWindows)
 		{
-			self#drag-img.style#left = x;
-			self#drag-img.style#top = y;
-			self#drag-img.$(svg).style#foreground-image = "url(svg:" + hash + ".svg)";
-			self#drag-img.update();
-
-			var res = view.performDrag(self#drag-img.$(div), { file: path }, #copy);
+			var res = view.performDrag(el, { file: path }, #any);
 			on_complete(res);
 		} else {
-			view.Host_StartDnD(path, x, y, function() {
+			view.Host_StartDnD(path, x, y, undefined, function() {
 				on_complete(true);
 			});
 		}

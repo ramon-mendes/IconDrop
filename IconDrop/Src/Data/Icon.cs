@@ -1,6 +1,8 @@
 ﻿using SciterSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +66,35 @@ namespace IconDrop.Data
 			if(kind == EIconKind.COLLECTION)
 				sv["path"] = new SciterValue(path);
 			return sv;
+		}
+
+		public bool EnsureIsLoaded()
+		{
+			switch(kind)
+			{
+				case EIconKind.LIBRARY:
+					return true;
+				case EIconKind.COLLECTION:
+					return File.Exists(path);
+				case EIconKind.STORE:
+					if(!File.Exists(path))
+					{
+						try
+						{
+							Store.LoadIcon(this).Wait();
+							return true;
+						}
+						catch(Exception)
+						{
+							return false;
+						}
+					}
+					return true;
+				default:
+					Debug.Assert(false);
+					break;
+			}
+			return false;
 		}
 	}
 }

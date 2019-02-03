@@ -28,21 +28,9 @@
 			UI.Proj.IconAddRmv(false, _obj_icon.hash);
 		};*/
 		self#ui-btn-usecopy.onClick = function() {
-			if(!Ion.IsActive && _obj_icon.kind == EIconKind.STORE)
-			{
-				view.msgbox(#alert, "Using icons from online packs in only available in PRO version.", Consts.APPNAME);
-				return;
-			}
-
 			view.Host_CopySVGIconUse(UI.Proj.IconGetName(_obj_icon));
 		};
 		self#ui-btn-symbolcopy.onClick = function() {
-			if(!Ion.IsActive && _obj_icon.kind == EIconKind.STORE)
-			{
-				view.msgbox(#alert, "Using icons from online packs in only available in PRO version.", Consts.APPNAME);
-				return;
-			}
-
 			if(UI.Proj._active)
 				view.Host_CopySVGIconSymbol(_obj_icon.hash, UI.Proj.IconGetName(_obj_icon));
 			else

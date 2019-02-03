@@ -159,7 +159,7 @@ namespace UI
 		{
 			self.timer(1000, function() {
 				var dic_icons = _obj.dic_icons.clone();
-				view.Host_GenerateSVGSprite(_svg_output_path, dic_icons);
+				view.Host_GenerateSVGSprite(dic_icons, _svg_output_path);
 			});
 		}
 	}
@@ -271,6 +271,10 @@ namespace UI
 			var dir = view.selectFolder("SVG sprite output directory");
 			if(dir)
 			{
+				dir = URL.toPath(dir);
+				log(dir);
+				view.Host_InDbg(dir);
+
 				if(dir[dir.length-1] != '/')
 					dir = dir + "/";
 
@@ -376,7 +380,12 @@ namespace ListUI
 		var hprev = 0;
 
 		isource.LoadBulk(function(icon) {
+			if(icon.hash.indexOf("BLM-Saint Barth") != -1) {
+				view.Host_InDbg(icon.hash);
+			}
+
 			var el_icon = IconBehavior.Create(icon);
+			
 
 			if(cnt++ >= 120)
 			{

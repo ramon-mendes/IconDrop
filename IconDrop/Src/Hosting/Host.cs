@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Diagnostics;
@@ -243,24 +243,33 @@ namespace IconDrop.Hosting
 
 		public void Host_GenerateSVGSprite(SciterValue[] args)
 		{
-			string sv_outputpath = args[0].Get("");
-			if(!Directory.Exists(Path.GetDirectoryName(sv_outputpath)))
-				return;
-
-			var sv_icons = args[1];
+			var sv_icons = args[0];
 			sv_icons.Isolate();
 
 			var xml = new SvgSpriteXML();
-			foreach(var item in sv_icons.Keys)
+			var hashes = sv_icons.Keys;
+			foreach(var item in hashes)
 			{
 				string hash = item.Get("");
 				if(!Joiner._iconsByHash.ContainsKey(hash))
 					continue;
 				var icon = Joiner._iconsByHash[hash];
 				icon.id = sv_icons[hash].Get("");
-				xml.AddIcon(icon);
+
+				if(icon.EnsureIsLoaded())
+					xml.AddIcon(icon);
 			}
-			File.WriteAllText(sv_outputpath, xml.ToXML());
+
+			string svg_outputpath = args[1].Get("");
+			string dir = Path.GetDirectoryName(svg_outputpath);
+			if(!Directory.Exists(dir))
+			{
+				App.AppWnd.ShowMessageBox("Could not create the SVG sprite files for this project because the output directory doesn't exists: " + svg_outputpath, Consts.AppName);
+				return;
+			}
+
+			// save icon-sprites.json
+			File.WriteAllText(svg_outputpath, xml.ToXML());
 		}
 
 #if OSX

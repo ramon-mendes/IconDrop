@@ -41,6 +41,7 @@ namespace IconDrop.Data
 		{
 			var data = File.ReadAllBytes(Consts.AppDir_Shared + "id_store.json");
 			string json = Encoding.UTF8.GetString(data);
+
 			SciterValue sv = SciterValue.FromJSONString(json);
 			foreach(var sv_pack in sv.AsEnumerable())
 			{
@@ -59,10 +60,11 @@ namespace IconDrop.Data
 				foreach(var sv_file in sv_pack["files"].AsEnumerable())
 				{
 					string filename = sv_file.Get("");
+					string hash = Utils.CalculateMD5Hash($"Store-{pack.id}-{filename}");
 					pack.icons.Add(new Icon()
 					{
 						kind = EIconKind.STORE,
-						hash = $"Store-{pack.id}-{filename}",
+						hash = hash,
 						path = Consts.DirUserData_Store + pack.id + "/" + filename,
 						source = pack.sv,
 						colored = pack.colored,

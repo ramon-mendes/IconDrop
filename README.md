@@ -19,6 +19,6 @@ IconDrop can automatically generate SVG sprite files for your web-development wo
 
 ---
 
-**Download:** [Windows](https://www.dropbox.com/s/h3fcpiocx2rjlon/IconDropWIN.zip?raw=1) or [OSX](https://www.dropbox.com/s/gxdjpt3fggj16v5/IconDropOSX.zip?raw=1)
+**Download:** [Windows](https://www.dropbox.com/s/3zlfd7nvgcihd3i/IconDropWIN.zip?dl=1) or [OSX](https://www.dropbox.com/s/gxdjpt3fggj16v5/IconDropOSX.zip?raw=1)
 
 If you like IconDrop, please, take a look at my other more powerfull tool called [Design Arsenal](https://designarsenal.co/#icondrop).
